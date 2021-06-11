@@ -1,18 +1,33 @@
 import getTodos from './getTodos.js';
-import app from './views/app.js';
+import todosView from './views/todos.js';
+import counterView from './views/counter.js';
+import filtersView from './views/filters.js';
+
+import registry from './registry.js';
+
+registry.add('todos', todosView);
+registry.add('counter', counterView);
+registry.add('filters', filtersView);
 
 const state = {
   todos: getTodos(),
   currentFilter: 'All'
 }
 
-const main = document.querySelector('.todoapp');
+const render = () => {
+  window.requestAnimationFrame(() => {
+    const main = document.querySelector('.todoapp');
+    const newMain = registry.renderRoot(main, state);
+    main.replaceWith(newMain);
+  });
+}
 
-window.requestAnimationFrame(() => {
-  const newMain = app(main, state);
-  console.log(newMain);
-  main.replaceWith(newMain);
-})
+// window.setInterval(() => {
+//   state.todos = getTodos();
+//   render()
+// }, 5000);
+
+render();
 
 /*
 렌더링 엔진은 requestAnimationFrame을 기반으로 한다.
