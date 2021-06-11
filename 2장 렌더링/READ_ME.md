@@ -20,4 +20,4 @@ cell.style.backgroundColor = 'red';
   # 렌더링 함수
 
   - 함수를 사용해 요소를 DOM에 렌더링하는 방법 -> DOM 요소가 애플리케이션의 상태에만 의존하는 것을 의미한다
-    `view = f(state)`
+    `view = f(state)`;
