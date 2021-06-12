@@ -14,16 +14,32 @@ registry.add('counter', counterView);
 registry.add('filters', filtersView);
 
 const state = {
-  todos: getTodos(),
+  todos: [],
   currentFilter: 'All'
 }
 
+// events 는 상태를 수정하고, 새로운 렌더링을 수동으로 호출
+const events = {
+  deleteItem: index => {
+    state.todos.splice(index, 1);
+    render();
+  },
+  addItem: text => {
+    state.todos.push({
+      text,
+      completed: false,
+    });
+    render();
+  }
+}
 
 
 const render = () => {
   window.requestAnimationFrame(() => {
     const main = document.querySelector('#root');
-    const newMain = registry.renderRoot(main, state);
+    // renderRoot: 렌더링 엔진의 진입점
+    // 따라서 events 는 모든 구성요소에 접근 가능하다
+    const newMain = registry.renderRoot(main, state, events);
     applyDiff(document.body, main, newMain);
   });
 }
