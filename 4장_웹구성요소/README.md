@@ -106,6 +106,12 @@
   - 올바른 방법은 구성 요소의 라이프사이클 동안 속성이 변경되도록 `attributeChangedCallback`메서드를 사용하는 것이다
   - `attributeChangedCallback` 메서드는 속성이 변경될 때마다 호출된다
 
+### 사용자 정의 이벤트
+
+- 구성 요소가 DOM에 연결되면 `loading`이라는 자리표시자(`plageholder`)가 표시된다
+- 그 다음 깃허브 REST API를 사용해 아바타 이미지 URL을 가져온다
+- 요청이 성공하면 아바타가 표시되고 그렇지 않으면 오류 자리표시자가 표시된다
+
 [참고]
 
 - [custom-elements](https://ko.javascript.info/custom-elements)
