@@ -8,8 +8,8 @@ const registry = {
 // 따라서 구성 요소를 래핑하는 고차함수를 생성해야 한다.
 const renderWrapper = component => {
   
-  return (targetElement, state) => {
-    const element = component(targetElement, state);
+  return (targetElement, state, events) => {
+    const element = component(targetElement, state, events);
 
     const childComponents = element.querySelectorAll('[data-component]');
 
@@ -20,7 +20,7 @@ const renderWrapper = component => {
         const child = registry[name];
         if (!child) return;
 
-        target.replaceWith(child(target,state));
+        target.replaceWith(child(target, state, events));
       });
 
     return element;
@@ -28,18 +28,18 @@ const renderWrapper = component => {
 }
 
 // 레지스트리 접근자(accessor) 메서드
-const add = (name, component) => {
-  registry[name] = renderWrapper(component);
+const add = (name, component, events) => {
+  registry[name] = renderWrapper(component, events);
 }
 
 
 // 최초 DOM 요소에 렌더링을 시작하기 위해 애플리케이션의 루트를 렌더링하는 메서드를 제공
 
-const renderRoot = (root, state) => {
+const renderRoot = (root, state, events) => {
   const cloneComponent = root => {
     return root.cloneNode(true);
   }
-  return renderWrapper(cloneComponent)(root, state);
+  return renderWrapper(cloneComponent)(root, state, events);
 }
 
 // add 와 renderRoot 메서드는 구성 요소 레지스트리의 공용 인터페이스이다.
