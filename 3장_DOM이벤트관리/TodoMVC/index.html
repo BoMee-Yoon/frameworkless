@@ -1,0 +1,84 @@
+<html>
+
+<head>
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/todomvc-common@1.0.5/base.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/todomvc-app-css@2.1.2/index.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Faker/3.1.0/faker.js"></script>
+    <title>
+        Frameworkless Frontend Development: Rendering
+    </title>
+</head>
+
+<body>
+    <!-- 
+        - template 은 페이지를 불러온 순간 즉시 그려지지는 않지만, 이후 js를 사용해 인스턴스를 생성할 수 있는 HTML 코드를 담을 방법을 제공함
+        - 템플릿은 콘텐츠 조각을 나중에 사용하기 위해 담아놓는 컨테이너로 페이지를 불러오는 동안 구문 분석기가 <template> 요소의 콘텐츠도 읽기는 하지만, 이는 유효성을 검증하기 위함이며 렌더링하기 위함은 아니다
+        - HTMLTemplateElement 는 읽기 전용 content속성을 가진다. content 는 템플릿을 담고 있는 DOM 하위 트리를 나타내는 DocumentFragment 이다.
+    -->
+    <template id="todo-item">
+        <li>
+            <div class="view">
+                <input type="checkbox" class="toggle">
+                <label></label>
+                <button class="destroy"></button>
+            </div>
+            <input type="text" class="edit">
+        </li>
+    </template>
+    <template id="todo-app">
+        <section class="todoapp">
+            <header class="header">
+                <h1>TodoMVC</h1>
+                <input class="new-todo" placeholder="What needs to be done?" autofocus>
+            </header>
+            <section class="main">
+                <input id="toggle-all" class="toggle-all" type="checkbox">
+                <label for="toggle-all">Mark all as complete</label>
+                <ul class="todo-list" data-component="todos">
+                    <!-- 
+                        createElement api 를 사용하게 되면, 코드를 읽고 유지하기 어렵다
+                        index.html 에 template 태그를 사용해 todo 요소의 마크업을 유지하면서 관리
+                        template 태그는 렌더링 엔진의 '스템프'로 사용할 수 있는 보이지 않는 태그다
+                     -->
+                    <!-- <template id="todo-item">
+                        <li>
+                            <div class="view">
+                                <input type="checkbox" class="toggle">
+                                <label></label>
+                                <button class="destroy"></button>
+                            </div>
+                            <input type="text" class="edit">
+                        </li>
+                    </template> -->
+                </ul>
+            </section>
+            <footer class="footer">
+                <span class="todo-count" data-component="counter"></span>
+                <ul class="filters" data-component="filters">
+                    <li>
+                        <a href="#/">All</a>
+                    </li>
+                    <li>
+                        <a href="#/active">Active</a>
+                    </li>
+                    <li>
+                        <a href="#/completed">Completed</a>
+                    </li>
+                </ul>
+                <button class="clear-completed">Clear completed</button>
+            </footer>
+        </section>
+    </template>
+    <div id="root">
+        <div data-component="app"></div>
+    </div>
+    <footer class="info">
+        <p>Double-click to edit a todo</p>
+        <p>Created by <a href="http://twitter.com/thestrazz86">Francesco Strazzullo</a></p>
+        <p>Thanks to <a href="http://todomvc.com">TodoMVC</a></p>
+    </footer>    
+    <script type="module" src="app.js"></script>
+</body>
+
+</html>
