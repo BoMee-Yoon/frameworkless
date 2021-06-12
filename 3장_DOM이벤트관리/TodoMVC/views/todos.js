@@ -27,11 +27,10 @@ const getTodoElement = (todo, index, events) => {
     element.querySelector('input.toggle').checked = true;
   }
 
-  const handler = e => events.deleteItem(index);
-
   element
     .querySelector('button.destroy')
-    .addEventListener('click', handler);
+    .dataset
+    .index = index;
 
   return element;
 }
@@ -45,5 +44,12 @@ export default (targetElement, { todos }, events) => {
     .map((todo, index) => getTodoElement(todo, index, events))
     .forEach(element => newTodoList.appendChild(element));
 
+  // 리스트 자체에 하나의 이벤트 핸들러만 연결
+  newTodoList.addEventListener('click', e => {
+    if (e.target.matches('button.destroy')) {
+      deleteItem(e.target.dataset.index)
+    }
+  })
+  
   return newTodoList;
 }
